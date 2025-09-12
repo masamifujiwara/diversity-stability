@@ -9,6 +9,31 @@ This repository contains all code and data required to reproduce the analyses fo
 The repository includes one data file and a series of R scripts.  
 Scripts are named alphabetically to indicate the order in which they should be run.
 
+### Data File
+
+**data.RData** – R workspace file containing three tibble data frames:
+
+* **bagseine** (`493,954 × 6`)  
+  - `sample_id` (num): Unique identifier for each sampling event  
+  - `major_area` (num): Texas coastal bay/estuary code  
+  - `year` (num): Year of sampling  
+  - `month` (num): Month of sampling (1–12)  
+  - `species_code` (num): Species identifier (matches `species$species_code`)  
+  - `catch` (num): Number of individuals captured  
+
+* **species** (`740 × 4`)  
+  - `species_code` (num): Species identifier  
+  - `sci_name` (chr): Scientific name  
+  - `com_name` (chr): Common name  
+  - `taxa` (num): Broad taxonomic group code  
+
+* **STATION_BS** (`73,600 × 4`)  
+  - `sample_id` (num): Identifier matching `bagseine$sample_id`  
+  - `major_area` (num): Texas coastal bay/estuary code  
+  - `year` (num): Year of sampling  
+  - `month` (num): Month of sampling (1–12)  
+
+These data represent long-term fish and invertebrate community monitoring in Texas estuarine systems.
 
 ### File Descriptions
 
