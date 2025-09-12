@@ -82,4 +82,4 @@ For questions, please contact:
 **Masami Fujiwara**  
 Department of Ecology & Conservation Biology  
 Texas A&M University  
-[add email or ORCID if desired]
+fujiwara@tamu.edu
