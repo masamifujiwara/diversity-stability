@@ -74,7 +74,7 @@ If you use these data or scripts, please cite:
 ## License
 
 This project is released under the **MIT License**.  
-You are free to use, modify, and distribute the code and data with appropriate attribution.
+The code in this repository is licensed under the MIT License. The data provided in this repository are not covered by this license and are subject to the restrictions described above. Use of the data beyond validation of the results presented in this study requires prior permission from the Texas Parks and Wildlife Department.
 
 ---
 
