@@ -15,6 +15,11 @@
 #         period | season |
 #         beta_richness | beta_shannon
 #       where beta_shannon uses Hill numbers: ^1D = exp(H')
+#
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 ###############################################################################
 
 library(tidyverse)
@@ -116,7 +121,7 @@ monthly_sp <- final_df_wide %>%
       month %in% c(12, 1, 2) ~ "Winter",   # DJF
       month %in% 3:5         ~ "Spring",   # MAM
       month %in% 6:8         ~ "Summer",   # JJA
-      TRUE                   ~ "Fall"      # SON
+      month %in% 9:11       ~ "Fall"      # SON
     ),
     season = factor(season, levels = c("Winter", "Spring", "Summer", "Fall"))
   ) %>% 
@@ -132,7 +137,7 @@ station_strat <- station %>%
       month %in% c(12, 1, 2) ~ "Winter",
       month %in% 3:5         ~ "Spring",
       month %in% 6:8         ~ "Summer",
-      TRUE                   ~ "Fall"
+      month %in% 9:11        ~ "Fall"
     ),
     season = factor(season, levels = c("Winter","Spring","Summer","Fall"))
   ) %>%
