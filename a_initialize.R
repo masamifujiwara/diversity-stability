@@ -9,13 +9,16 @@
 #    • Source this script at the start of any analysis to ensure
 #      that file paths are set relative to the script location.
 #    • All results, figures, and intermediate data will be saved
-#      in the automatically created "results" folder.
+#      in the created "results" folder.
 #
 #  Inputs:  None (the script detects its own location)
 #  Outputs: Creates a "results" subdirectory under the script directory
 #
+#  NOTE: I wrote the working directory finder and setter for my undergrad course
+#        , I include it in most of my scripts. It should work in Linux (nohup),  
+#
 #  Author:  Masami Fujiwara
-#  Date:    2025-09-12   # ← update with current date
+#  Date:    2026-08-24   
 # ──────────────────────────────────────────────────────────────
 
 # retrieves the file path of the script file.
