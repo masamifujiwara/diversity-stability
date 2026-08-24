@@ -1,6 +1,6 @@
 
 # ──────────────────────────────────────────────────────────────
-#  Script:  fe4_synchrony.R
+#  Script:  e4_synchrony.R
 #  Purpose: 
 #    • Load the most recent ecological diversity & stability CSV files
 #      from the “results/” directory
