@@ -54,6 +54,7 @@ These data represent long-term fish and invertebrate community monitoring in Tex
 - **e5_turnover.R** – Calculates species turnover rates.
 - **e6_population_level.R** – Performs population-level stability analyses.
 - **e7_taylor.R** – Fits Taylor’s law relationships between mean abundance and variance.
+- **g_null_model_testing.R** - Null model comparisons
 
 ## Reproducibility
 
