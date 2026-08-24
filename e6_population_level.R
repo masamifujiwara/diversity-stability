@@ -1,5 +1,4 @@
 # ──────────────────────────────────────────────────────────────
-#  Script:  e_diversity_stability_analysis.R
 #  Section: Population-Level Mixed-Effects Model
 #
 #  Purpose:
@@ -13,8 +12,9 @@
 #    • Visualize seasonal differences, bay-level random effects,
 #      and species-level random effects.
 #
-#  Author:   Masami Fujiwara
-#  Created:  2025-08-07
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 #
 #  Dependencies (this section only):
 #    • tidyverse   – data wrangling (dplyr) and visualization (ggplot2)
@@ -248,49 +248,6 @@ m_pop <- lmer(log10(I_i) ~ season + (1 | major_area) + (1 | species_code),
 summary(m_pop)
 ranef(m_pop)$major_area
 
-# Linear mixed model for log10(I_i) ~ season + (1 | major_area) + (1 | species_code)
-#
-# Random effects:
-#   species_code (Intercept):
-#     Variance = 0.08759, SD = 0.29596
-#       → Species identity accounts for substantial variation in population stability.
-#   major_area (Intercept):
-#     Variance = 0.000522, SD = 0.02286
-#       → Bay-to-bay differences are minimal.
-#   Residual:
-#     Variance = 0.10651, SD = 0.32636
-#
-# Fixed effects (reference = Fall):
-#   (Intercept):
-#     Estimate = -2.056, SE = 0.0196, t = -104.76, p < 2e-16
-#       → Baseline log10(I_i) in Fall corresponds to I_i ≈ 10^-2.056 ≈ 0.0088.
-#   seasonSpring:
-#     Estimate = -0.0356, SE = 0.0058, t = -6.13, p < 1e-9
-#       → Spring stability ≈ 10^-0.0356 ≈ 0.92 × Fall (8% lower).
-#   seasonSummer:
-#     Estimate =  0.0280, SE = 0.0055, t =  5.07, p < 1e-6
-#       → Summer stability ≈ 10^0.0280 ≈ 1.07 × Fall (7% higher).
-#   seasonWinter:
-#     Estimate = -0.1551, SE = 0.0063, t = -24.67, p < 2e-16
-#       → Winter stability ≈ 10^-0.1551 ≈ 0.70 × Fall (30% lower).
-#
-# Random intercepts for major_area (deviation in log10(I_i)):
-#   Bay 1: -0.01733 (≈4% lower than average Fall stability)
-#   Bay 2:  0.03039 (≈7% higher)
-#   Bay 3:  0.00872 (≈2% higher)
-#   Bay 4:  0.02096 (≈5% higher)
-#   Bay 5:  0.01094 (≈2.5% higher)
-#   Bay 6: -0.00116 (≈0% difference)
-#   Bay 7: -0.03575 (≈8% lower)
-#   Bay 8: -0.01677 (≈4% lower)
-#
-# Overall interpretation:
-#   • Population stability varies significantly by season:
-#       – Highest in Summer, intermediate in Fall, lower in Spring, lowest in Winter.
-#   • Species identity is the main source of variability; spatial (bay) effects are minor.
-
-
-
 # 1. Seasonal differences in population stability
 fig_pop_season <- pop_inv %>%
   filter(I_i > 0) %>% 
@@ -394,9 +351,9 @@ if (P==1){
 
 results_dir <- file.path(script_dir, "results")
 
-ggsave(filename = file.path(results_dir, "population_variability_600dpi.tif"),
+ggsave(filename = file.path(results_dir, "Fig_S4_population_variability_600dpi.tif"),
   plot = fig_spec_re_c,
-  width = 18, height = 10.0, units = "cm",
+  width = 18*1.5, height = 10.0*1.5, units = "cm",
   dpi = 600, device = "tiff", compression = "lzw",
   bg = "white"
 )
