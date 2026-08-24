@@ -1,5 +1,4 @@
 # ──────────────────────────────────────────────────────────────
-#  Script:  e_diversity_stability_analysis.R
 #  Section: Abundance–Variability Scaling (Taylor’s law)
 #  Purpose:
 #    • Examine the relationship between mean abundance (μ) and variance (σ²)
@@ -11,8 +10,10 @@
 #    • Visualize scaling with log–log plots and fit linear models
 #      (overall and stratified by season).
 #
-#  Author:   Masami Fujiwara
-#  Created:  2025-08-07
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 #
 #  Dependencies (this section only):
 #    • tidyverse   – data wrangling (dplyr, tibble) and plotting (ggplot2)
@@ -220,17 +221,23 @@ df_taylor <- pop_inv %>%
     log_I      = log10(I_i)
   )
 
-# --- Pooled fits (optional: for reporting in caption) ---
-fit_sigma <- lm(log_sigma2 ~ log_mu, data = df_taylor)   # classic Taylor: slope = b
+### --- Pooled fits (optional: for reporting in caption) ---
+### --- Pooled fits (optional: for reporting in caption) ---
+fit_sigma <- lm(log_sigma2 ~ log_mu, data = df_taylor)   # classic Taylor: slope = b 
 fit_I     <- lm(log_I ~ log_mu, data = df_taylor)        # invariability: slope = m = 2 - b
 
-b  <- unname(coef(fit_sigma)[2])
-ci_b <- unname(confint(fit_sigma)["log_mu", ])
-m  <- unname(coef(fit_I)[2])
-ci_m <- unname(confint(fit_I)["log_mu", ])
+b    <- unname(coef(fit_sigma)["log_mu"]) 
+ci_b <- unname(confint(fit_sigma)["log_mu", ]) 
+t_b  <- summary(fit_sigma)$coefficients["log_mu", "t value"]
+df_b <- fit_sigma$df.residual
 
-message(sprintf("Taylor slope b = %.3f (95%% CI %.3f–%.3f)", b, ci_b[1], ci_b[2]))
-message(sprintf("Invariability slope m = %.3f (95%% CI %.3f–%.3f)", m, ci_m[1], ci_m[2]))
+m    <- unname(coef(fit_I)["log_mu"]) 
+ci_m <- unname(confint(fit_I)["log_mu", ]) 
+t_m  <- summary(fit_I)$coefficients["log_mu", "t value"]
+df_m <- fit_I$df.residual
+
+message(sprintf("Taylor slope b = %.3f (95%% CI [%.3f, %.3f], t_%d = %.1f)", b, ci_b[1], ci_b[2], df_b, t_b))
+message(sprintf("Invariability slope m = %.3f (95%% CI [%.3f, %.3f], t_%d = %.1f)", m, ci_m[1], ci_m[2], df_m, t_m))
 
 # --- Panel (a): Classic Taylor’s law: log10(σ²) vs log10(μ) ---
 p_a <- ggplot(df_taylor, aes(x = mu, y = sigma2, color = season)) +
@@ -282,9 +289,9 @@ p_a_bw <- ggplot(df_taylor, aes(x = mu, y = sigma2)) +
 # Save: TIFF, 8.5 cm wide, 600 dpi, white background
 results_dir <- file.path(script_dir, "results")
 
-ggsave(filename = file.path(results_dir, "taylor_loglog_8p5cm_600dpi.tif"),
+ggsave(filename = file.path(results_dir, "Fig_6_taylor_loglog_8p5cm_600dpi.tif"),
   plot = p_a_bw,
-  width = 8.5, height = 6.0, units = "cm",
+  width = 8.5*1.5, height = 6.0*1.5, units = "cm",
   dpi = 600, device = "tiff", compression = "lzw",
   bg = "white"
 )
