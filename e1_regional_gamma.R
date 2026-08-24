@@ -44,6 +44,10 @@
 #    5.  GAM fits for richness & Shannon (per season)
 #    6.  Extract tidy GAM summaries (parametric & smooth terms)
 #    7.  Visualization and optional export
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 # ──────────────────────────────────────────────────────────────
 
 rm(list = ls())
@@ -80,6 +84,7 @@ results_dir <- file.path(script_dir, "results")
 # ──────────────────────────────────────────────────────────────
 # 1.  Identify the most‐recent date tag among saved CSVs
 # ──────────────────────────────────────────────────────────────
+# This was written to keep all old results. Hand made version controlling scheme. 
 base_names <- c(
   "population_invariability",
   "community_invariability",
