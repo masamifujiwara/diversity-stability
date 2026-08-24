@@ -1,5 +1,5 @@
 # ──────────────────────────────────────────────────────────────
-#  Script:  f1_regional_gamma.R
+#  Script:  e1_regional_gamma.R
 #  Purpose: Load most recent diversity & stability CSV outputs,
 #           extract γ-diversity (richness, Shannon),
 #           and perform temporal trend analyses:
