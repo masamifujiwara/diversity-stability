@@ -298,14 +298,10 @@ fig_turnover_stability_small <- ggplot() +
 # 2) Save: TIFF, 8.5 cm width, 600 dpi, white background
 results_dir <- file.path(script_dir, "results")
 
-ggsave(filename = file.path(results_dir, "fig_turnover_stability_8p5cm_600dpi.tif"),
+ggsave(filename = file.path(results_dir, "fig_5_turnover_stability_8p5cm_600dpi.tif"),
   plot = fig_turnover_stability_small,
-  width = 8.5, height = 6.0, units = "cm",
+  width = 8.5*1.5, height = 6.0*1.5, units = "cm",
   dpi = 600, device = "tiff", compression = "lzw",
   bg = "white"
 )
-# (Optional) Save outputs
-# readr::write_csv(fixef_tab, file.path(results_dir, "turnover_vs_stability_LMM_table.csv"))
-# ggsave(file.path(results_dir, "turnover_vs_stability_mixed_model.png"),
-#        fig_turnover_stability, width = 7.5, height = 5.5, dpi = 300)
 
