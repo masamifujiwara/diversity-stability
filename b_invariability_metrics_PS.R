@@ -52,6 +52,10 @@
 #   • Synchrony and portfolio effect are computed from the same strata.
 #   • Missing months shorten the time series; mean/variance estimates remain
 #     unbiased under MCAR missingness.
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 ###############################################################################
 
 
@@ -82,7 +86,7 @@ load("data.Rdata")   # provides STATION_BS, bagseine (names from your .Rdata)
 
 station <- STATION_BS %>% 
   dplyr::select(sample_id, major_area, year, month) %>% 
-  filter(major_area %in% 1:8)
+  filter(major_area %in% 1:8) # These are the eight major bays. 
 
 data <- bagseine %>% 
   dplyr::select(sample_id, major_area, year, month, catch, species_code)
