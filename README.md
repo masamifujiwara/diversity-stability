@@ -65,6 +65,13 @@ These data represent long-term fish and invertebrate community monitoring in Tex
 
 All scripts are written for R ≥ 4.2 and use only publicly available packages from CRAN.
 
+## AI Use Disclosures
+
+- The initial code was written by Masami Fujiwara with assistance from ChatGPT 5.0. AI was used interactively to correct code line by line, identify errors, and provide suggestions for resolving coding issues.
+- The null model testing code (g_null_model_testing.R) was subsequently revised using Claude Opus 4.9. A grain-size issue was identified in the initial code, and Claude was used to provide initial suggestions for addressing the issue.
+- All code was annotated by ChatGPT 5.0 for readability, with the exception of the null model testing code.
+- All code was reviewed and verified by Masami Fujiwara and independently checked using Claude Opus 4.9.
+
 ## Citation
 
 If you use these data or scripts, please cite:
