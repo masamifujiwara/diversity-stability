@@ -78,38 +78,6 @@ sem_grviz_pair <- function(
   DiagrammeR::grViz(g)
 }
 
-# ----- Fill with your standardized path coefficients and R² values -----
-# From your outputs:
-# Richness model (standardized):
-#   richness -> log_phi = -0.1781 (p = 0.0083, sig)
-#   log_phi  -> log_IC  = -0.9105 (p < 0.001, sig)
-#   richness -> log_IC  =  0.0329 (p = 0.3068, ns)
-#   R²: log_phi (m=0.0301, c=0.3213); log_IC (m=0.8018, c=0.8434)
-
-# Shannon model (standardized):
-#   shannon -> log_phi = -0.7010 (p < 0.001, sig)
-#   log_phi -> log_IC  = -0.8510 (p < 0.001, sig)
-#   shannon -> log_IC  =  0.1168 (p = 0.0014, sig)
-#   R²: log_phi (m=0.4812, c=0.5482); log_IC (m=0.8033, c=0.8575)
-
-# g_combined <- sem_grviz_pair(
-#   # (a) Richness panel
-#   beta_div_syn_a = -0.1781, sig_div_syn_a = TRUE,
-#   beta_syn_stab_a= -0.9105, sig_syn_stab_a= TRUE,
-#   beta_div_stab_a=  0.0329, sig_div_stab_a= FALSE,
-#   R2m_sync_a = 0.03012467, R2c_sync_a = 0.3213154,
-#   R2m_stab_a = 0.80180065, R2c_stab_a = 0.8434445,
-#   # (b) Shannon panel
-#   beta_div_syn_b = -0.7010, sig_div_syn_b = TRUE,
-#   beta_syn_stab_b= -0.8510, sig_syn_stab_b = TRUE,
-#   beta_div_stab_b=  0.1168, sig_div_stab_b = TRUE,
-#   R2m_sync_b = 0.4811806, R2c_sync_b = 0.5481526,
-#   R2m_stab_b = 0.8032674, R2c_stab_b = 0.8575214,
-#   # Titles (kept default)
-#   title_a = "(a) Richness (q = 0)",
-#   title_b = "(b) Shannon (q = 1)"
-# )
-
 g_combined <- sem_grviz_pair(
   # (a) Richness panel
   beta_div_syn_a = -0.1781, se_div_syn_a = 0.067, sig_div_syn_a = TRUE,
@@ -134,18 +102,9 @@ g_combined
 svg_code <- export_svg(g_combined)
 writeLines(svg_code, "sem_combined_ab.svg")
 
-# Fallback: render PNG via {rsvg}, then convert to TIFF via {magick}
-# install.packages(c("rsvg","magick"))  # if needed
 library(rsvg); library(magick)
 
 rsvg_png("Fig_4_sem_combined_ab.svg", "Fig_4_sem_combined_ab.png", width = 1800, height = 700)
 image_write(image_read("Fig_4_sem_combined_ab.png"), path = "Fig_4_sem_combined_ab.tif",
             format = "tiff", compression = "lzw")
 
-# Suggested caption (plain text):
-# Minimal path diagrams for the piecewise SEMs. Values on arrows are standardized
-# path coefficients (STD β); dashed lines indicate non-significant paths. Negative
-# coefficients from diversity to synchrony indicate that greater diversity is
-# associated with lower synchrony (i.e., more asynchrony). Indirect effect (std)
-# is the product of diversity → synchrony and synchrony → stability. Models include
-# random intercepts for bay and season; node labels show R² (marginal, conditional).
