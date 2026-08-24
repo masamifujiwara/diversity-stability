@@ -2,8 +2,10 @@
 #  Script:  f3_portfolio.R
 #  Purpose: Load latest CSVs and analyze the portfolio effect
 #           using log10 transform only (time trend + diversity models)
-#  Author:  Masami Fujiwara
-#  Date:    2025-08-07
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 # ──────────────────────────────────────────────────────────────
 
 rm(list = ls())
@@ -163,22 +165,28 @@ cat("\n[Linear trend on log10(portfolio)]\n")
 print(summary(m_lin)$tTable["t_c", , drop = FALSE])  # estimate, SE, t, p
 
 # ── Figures (time) ────────────────────────────────────────────
-if (P == 1) {
-  fig_port_time <- ggplot(port_clean, aes(x = period_mid, y = port_t)) +
-    geom_point(alpha = 0.5) +
-    geom_smooth(
-      method  = "gam", formula = y ~ s(x, k = 6),
-      se = TRUE, color = "steelblue", fill = "lightblue", linewidth = 1
-    ) +
-    labs(
-      x = "Mid-period year", y = expression(log[10](Portfolio~effect)),
-      title = "Temporal trend in Portfolio Effect (log10 scale)",
-      subtitle = "GAM smooth (k = 6) with 95% CI"
-    ) +
-    theme_minimal()
-  
-  print(fig_port_time)
-}
+
+fig_port_time <- ggplot(port_clean, aes(x = period_mid, y = port_t)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(
+    method  = "gam", formula = y ~ s(x, k = 6),
+    se = TRUE, color = "steelblue", fill = "lightblue", linewidth = 1
+  ) +
+  labs(
+    x = "Mid-period year", y = expression(log[10](Portfolio~effect)),
+    title = "Temporal trend in Portfolio Effect (log10 scale)",
+    subtitle = "GAM smooth (k = 6) with 95% CI"
+  ) +
+  theme_minimal()
+
+results_dir <- file.path(script_dir, "results")
+
+ggsave(filename = file.path(results_dir, "S3_fig_PORTFOLIO_time.tif"),
+       fig_port_time , width = 16, height = 10, units = "cm",
+       dpi = 600, device = "tiff", compression = "lzw")
+
+print(fig_port_time)
+
 
 # ──────────────────────────────────────────────────────────────
 # 4) Diversity → log10(Portfolio effect) mixed models
@@ -235,15 +243,26 @@ if (P == 1) {
   fig_DS_two_panel <- (fig_rich_t + labs(tag = "a")) / (fig_shan_t + labs(tag = "b"))
   print(fig_DS_two_panel)
 }
+
 results_dir <- file.path(script_dir, "results")
 
-ggsave(filename = file.path(results_dir, "fig_PORTFOLIO_both.tif"),
+ggsave(filename = file.path(results_dir, "fig_2_PORTFOLIO_both.tif"),
    fig_DS_two_panel , width = 8.5, height = 12, units = "cm",
         dpi = 600, device = "tiff", compression = "lzw")
 
+if (requireNamespace("MuMIn", quietly = TRUE)) {
+  library(MuMIn)
+  r2_rich   <- MuMIn::r.squaredGLMM(m_rich_t)
+  r2_shan   <- MuMIn::r.squaredGLMM(m_shan_t)
+  r2_both   <- MuMIn::r.squaredGLMM(m_both_t)
+  
+  print(r2_rich)
+  print(r2_shan)
+  print(r2_both)
+}
 
 # ──────────────────────────────────────────────────────────────
-# 5) Minimal reporting helpers (optional)
+# 5) Minimal reporting helpers 
 # ──────────────────────────────────────────────────────────────
 log10_mult <- function(beta) 10^beta
 cat("\n[Back-transform hints]\n")
@@ -253,7 +272,7 @@ cat("  • +1 species multiplies PE by ~", round(log10_mult(fixef(m_rich_t)["ric
 ## Some statistics
 # Vector
 x <- portfolio$portfolio
-x <- x[is.finite(x)]         # drop NA/NaN/Inf
+x <- x[is.finite(x)]         
 n <- length(x)
 
 # Descriptives
