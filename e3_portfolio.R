@@ -1,5 +1,5 @@
 # ──────────────────────────────────────────────────────────────
-#  Script:  f3_portfolio.R
+#  Script:  e3_portfolio.R
 #  Purpose: Load latest CSVs and analyze the portfolio effect
 #           using log10 transform only (time trend + diversity models)
 #
