@@ -22,6 +22,12 @@
 ###      cannot return exactly 0 or 1.
 ###   4. Assertions verify that the permutation preserves species variances
 ###      and that null phi stays within [0, 1].
+###
+###
+###  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+###     The original code had errors. Code revisions were suggested by
+###     Claude (Opus 4.9). Then, the revisions were implemented.
+###  Date:    2026-08-24   
 ### ──────────────────────────────────────────────────────────────
 
 library(tidyverse)
@@ -96,7 +102,7 @@ monthly_sp <- final_df_wide %>%
          season = case_when(month %in% c(12, 1, 2) ~ "Winter",
                             month %in% 3:5         ~ "Spring",
                             month %in% 6:8         ~ "Summer",
-                            TRUE                   ~ "Fall"),
+                            month %in% 9:11        ~ "Fall"),
          season = factor(season, levels = c("Winter","Spring","Summer","Fall"))) %>%
   filter(!is.na(period))
 
@@ -105,7 +111,7 @@ station_strat <- station %>% filter(year >= start_year, year <= end_year) %>%
   mutate(season = case_when(month %in% c(12, 1, 2) ~ "Winter",
                             month %in% 3:5         ~ "Spring",
                             month %in% 6:8         ~ "Summer",
-                            TRUE                   ~ "Fall"),
+                            month %in% 9:11        ~ "Fall"),
          season = factor(season, levels = c("Winter","Spring","Summer","Fall"))) %>%
   filter(!is.na(period))
 
