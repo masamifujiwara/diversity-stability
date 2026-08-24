@@ -35,6 +35,11 @@
 #    • This approach preserves **within-season structure** (month-matched
 #      comparisons) while integrating across years, making it conceptually
 #      consistent with invariability measures.
+#
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 ###############################################################################
 
 
@@ -129,7 +134,7 @@ monthly_sp <- final_df_wide %>%
       month %in% c(12, 1, 2) ~ "Winter",   # DJF
       month %in% 3:5         ~ "Spring",   # MAM
       month %in% 6:8         ~ "Summer",   # JJA
-      TRUE                   ~ "Fall"      # SON
+      month %in% 9:11         ~ "Fall"      # SON
     ),
     season = factor(season, levels = c("Winter", "Spring", "Summer", "Fall"))
   ) %>%
@@ -144,7 +149,7 @@ station_strat <- station %>%
       month %in% c(12, 1, 2) ~ "Winter",
       month %in% 3:5         ~ "Spring",
       month %in% 6:8         ~ "Summer",
-      TRUE                   ~ "Fall"
+      month %in% 9:11          ~ "Fall"
     ),
     season = factor(season, levels = c("Winter","Spring","Summer","Fall"))
   ) %>%
@@ -194,7 +199,7 @@ station_strat <- station %>%
       month %in% c(12, 1, 2) ~ "Winter",
       month %in% 3:5         ~ "Spring",
       month %in% 6:8         ~ "Summer",
-      TRUE                   ~ "Fall"
+      month %in% 9:11          ~ "Fall"
     ),
     season = factor(season, levels = c("Winter","Spring","Summer","Fall"))
   ) %>%
@@ -282,7 +287,7 @@ beta_bray_stratum <- beta_bray_pairs_monthly %>%
   ) %>%
   arrange(major_area, period, season)
 
-# ----------------------------- (optional) Export -----------------------------------
+# ----------------------------- Export -----------------------------------
 results_dir <- file.path(script_dir, "results")
 if (!dir.exists(results_dir)) dir.create(results_dir)
 today_tag <- format(Sys.Date(), "%Y-%m-%d")
