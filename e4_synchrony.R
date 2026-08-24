@@ -1,6 +1,6 @@
 
 # ──────────────────────────────────────────────────────────────
-#  Script:  f4_synchrony.R
+#  Script:  fe4_synchrony.R
 #  Purpose: 
 #    • Load the most recent ecological diversity & stability CSV files
 #      from the “results/” directory
@@ -11,9 +11,6 @@
 #    • Quantify direct and indirect pathways of richness and Shannon 
 #      diversity on stability
 #    • Produce diagnostic summaries and ggplot2 figures for interpretation
-#
-#  Author:   Masami Fujiwara
-#  Created:  2025-08-07
 #
 #  Dependencies (loaded here):
 #    • tidyverse   – data wrangling (dplyr, tibble, purrr, stringr, readr) and ggplot2 graphics
@@ -53,6 +50,10 @@
 #      indirect stabilizing effects
 #    • Figures display relationships between diversity and synchrony, and
 #      are combined into multi-panel layouts with patchwork
+#
+#  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
+#     Most of the annotations were added by ChatGPT for readability. 
+#  Date:    2026-08-24   
 # ──────────────────────────────────────────────────────────────
 
 rm(list = ls())
@@ -301,6 +302,20 @@ sem_rich_coefs_std  <- coefs(sem_rich, standardize = "scale")  # standardized (�
 sem_rich_r2         <- rsquared(sem_rich)
 sem_rich_fisherC    <- fisherC(sem_rich)
 
+# --- CALCULATE 95% CIs FOR RICHNESS MODEL ---
+sem_rich_ci <- sem_rich_coefs_std %>%
+  tibble::as_tibble(.name_repair = "unique") %>%  # Fixes the empty column name
+  dplyr::mutate(
+    Lower_CI = Estimate - 1.96 * Std.Error,
+    Upper_CI = Estimate + 1.96 * Std.Error,
+    Formatted_Report = sprintf("%.3f, 95%% CI: [%.3f, %.3f], SE: %.3f", 
+                               Estimate, Lower_CI, Upper_CI, Std.Error)
+  ) %>%
+  dplyr::select(Response, Predictor, Formatted_Report)
+
+message("\n[Richness Model - Formatted for Text/Table 3]")
+print(sem_rich_ci)
+
 if (P == 1) {
   message("\n[SEM (Richness) – raw coefficients]"); print(sem_rich_coefs_raw)
   message("\n[SEM (Richness) – standardized coefficients]"); print(sem_rich_coefs_std)
@@ -332,6 +347,20 @@ sem_shan_coefs_raw  <- coefs(sem_shan, standardize = "none")
 sem_shan_coefs_std  <- coefs(sem_shan, standardize = "scale")
 sem_shan_r2         <- rsquared(sem_shan)
 sem_shan_fisherC    <- fisherC(sem_shan)
+
+# --- CALCULATE 95% CIs FOR SHANNON MODEL ---
+sem_shan_ci <- sem_shan_coefs_std %>%
+  tibble::as_tibble(.name_repair = "unique") %>%  # Fixes the empty column name
+  dplyr::mutate(
+    Lower_CI = Estimate - 1.96 * Std.Error,
+    Upper_CI = Estimate + 1.96 * Std.Error,
+    Formatted_Report = sprintf("%.3f, 95%% CI: [%.3f, %.3f], SE: %.3f", 
+                               Estimate, Lower_CI, Upper_CI, Std.Error)
+  ) %>%
+  dplyr::select(Response, Predictor, Formatted_Report)
+
+message("\n[Shannon Model - Formatted for Text/Table 3]")
+print(sem_shan_ci)
 
 if (P == 1) {
   message("\n[SEM (Shannon) – raw coefficients]"); print(sem_shan_coefs_raw)
@@ -369,7 +398,7 @@ fig_logphi_both <- (fig_logphi_rich + labs(tag = "a") + tag_theme) /
 
 results_dir <- file.path(script_dir, "results")
 
-ggsave(filename = file.path(results_dir, "fig_Synchrony_both.tif"),
+ggsave(filename = file.path(results_dir, "fig_3_Synchrony_both.tif"),
   fig_logphi_both, width = 8.5, height = 12, units = "cm",
        dpi = 600, device = "tiff", compression = "lzw")
 
