@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+
+title: "Diversity-stability analysis code"
+type: software
+version: 1.1.0
+
+authors:
+  - family-names: "Bleth"
+    given-names: "Hannah L."
+  - family-names: "Fujiwara"
+    given-names: "Masami"
+  - family-names: "Fisher"
+    given-names: "Mark"
+  - family-names: "Liu"
+    given-names: "Hui"
+  - family-names: "Martinez-Andrade"
+    given-names: "Fernando"
+  - family-names: "Perkin"
+    given-names: "Joshuah S."
+
+abstract: >
+  R scripts and associated data used to reproduce the analyses presented
+  in the manuscript "Evenness and Taylor's law scaling shape
+  biodiversity-stability relationships in subtropical estuarine
+  communities."
+
+keywords:
+  - biodiversity
+  - biodiversity-stability relationships
+  - community ecology
+  - estuaries
+  - evenness
+  - Taylor's law
+  - ecological stability
+  - subtropical estuaries
+
+license: "MIT"
+
+repository-code: "https://github.com/masamifujiwara/diversity-stability"
+
+date-released: 2026-09-29
+
+references:
+  - type: article
+    authors:
+      - family-names: "Bleth"
+        given-names: "Hannah L."
+      - family-names: "Fujiwara"
+        given-names: "Masami"
+      - family-names: "Fisher"
+        given-names: "Mark"
+      - family-names: "Liu"
+        given-names: "Hui"
+      - family-names: "Martinez-Andrade"
+        given-names: "Fernando"
+      - family-names: "Perkin"
+        given-names: "Joshuah S."
+    title: "Evenness and Taylor's law scaling shape biodiversity-stability relationships in subtropical estuarine communities"
+    journal: "Ecology"
+    status: "submitted"
