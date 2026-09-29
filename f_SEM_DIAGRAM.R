@@ -2,6 +2,7 @@
 library(DiagrammeR)
 library(DiagrammeRsvg)  # for export
 library(rsvg)           # for export
+library(magick)
 
 # Helper to build the combined Graphviz source
 sem_grviz_pair <- function(
@@ -100,11 +101,13 @@ g_combined <- sem_grviz_pair(
 g_combined
 
 svg_code <- export_svg(g_combined)
-writeLines(svg_code, "sem_combined_ab.svg")
 
-library(rsvg); library(magick)
+svg_path <- file.path(results_dir, "Fig_4_sem_combined_ab.svg")
+png_path <- file.path(results_dir, "Fig_4_sem_combined_ab.png")
+tif_path <- file.path(results_dir, "Fig_4_sem_combined_ab.tif")
 
-rsvg_png("Fig_4_sem_combined_ab.svg", "Fig_4_sem_combined_ab.png", width = 1800, height = 700)
-image_write(image_read("Fig_4_sem_combined_ab.png"), path = "Fig_4_sem_combined_ab.tif",
+writeLines(svg_code, svg_path)
+
+rsvg_png(svg_path, png_path, width = 1800, height = 700)
+image_write(image_read(png_path), path = tif_path,
             format = "tiff", compression = "lzw")
-

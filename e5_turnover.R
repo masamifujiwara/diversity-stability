@@ -137,14 +137,11 @@ beta_bray_std <- beta_bray %>%
     major_area,
     period,
     season = as.character(season),
-    turnover = bray_bc,                 # <- updated column
+    turnover = bray_bc,                 
     n_pairs,
     mean_months_per_pair
   ) %>%
   filter(is.finite(turnover))
-
-# (Optional) QC filter if desired:
-# beta_bray_std <- beta_bray_std %>% filter(n_pairs >= 2, mean_months_per_pair >= 3)
 
 # Community invariability table
 com_inv_std <- com_inv %>%
@@ -155,7 +152,7 @@ com_inv_std <- com_inv %>%
 # 2) Join turnover with I_C at the same stratum
 df_turnover_ic <- com_inv_std %>%
   inner_join(beta_bray_std, by = c("major_area","period","season")) %>%
-  filter(I_C > 0) %>%                                  # needed for log10
+  filter(I_C > 0) %>%                                  
   mutate(
     season = factor(season, levels = c("Fall","Spring","Summer","Winter")),
     log10_Ic = log10(I_C)

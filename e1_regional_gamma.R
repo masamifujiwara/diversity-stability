@@ -1,5 +1,5 @@
 # ──────────────────────────────────────────────────────────────
-#  Script:  e1_regional_gamma.R
+#  Script:  f1_regional_gamma.R
 #  Purpose: Load most recent diversity & stability CSV outputs,
 #           extract γ-diversity (richness, Shannon),
 #           and perform temporal trend analyses:
@@ -7,8 +7,6 @@
 #             • GAM fits (per season, with CI ribbons)
 #           Also generates summary tables of regression & GAM results.
 #
-#  Author:   Masami Fujiwara
-#  Created:  2025-09-09
 #
 #  Dependencies:
 #    • tidyverse  – data wrangling & plotting
@@ -47,7 +45,7 @@
 #
 #  Author:  Masami Fujiwara with assistance of ChatGPT 5.0 in debugging 
 #     Most of the annotations were added by ChatGPT for readability. 
-#  Date:    2026-08-24   
+#  Date (revision):    2026-08-24   
 # ──────────────────────────────────────────────────────────────
 
 rm(list = ls())
@@ -378,7 +376,7 @@ extract_gam_summary <- function(model, metric) {
 }
 
 
-# ---- Use it on your models ----
+# ---- Use it on models ----
 rich_summ <- extract_gam_summary(gam_richness, "Richness")
 shan_summ <- extract_gam_summary(gam_shannon,  "Shannon")
 

@@ -148,7 +148,7 @@ monthly_sp <- final_df_wide %>%
     values_to       = "abund"
   ) %>% 
   mutate(
-    species_code = as.integer(species_code),
+    species_code = as.integer(species_code), # redundant but kept because not harmful
     date  = as.Date(sprintf("%d-%02d-15", year, month)),
     
     # Seasons for the Texas coast
@@ -156,7 +156,7 @@ monthly_sp <- final_df_wide %>%
       month %in% c(12, 1, 2) ~ "Winter",   # DJF
       month %in% 3:5         ~ "Spring",   # MAM
       month %in% 6:8         ~ "Summer",   # JJA
-      TRUE                   ~ "Fall"      # SON
+      TRUE                   ~ "Fall"      # SON #  month %in% 9:11 is better, but checked we only have 1-12 for months so it is safe. 
     ),
     season = factor(season, levels = c("Winter", "Spring", "Summer", "Fall"))
   ) %>% 
@@ -166,13 +166,17 @@ monthly_sp <- final_df_wide %>%
 
 # ── Population invariability  I_i  ──────────────────────────────────────────
 pop_inv_ps <- monthly_sp %>% 
-  group_by(major_area, period, season, species_code) %>% 
+  group_by(major_area, period, season, date, species_code) %>%
+  summarise(total_abund = sum(abund), .groups = "drop") %>% 
+  group_by(major_area, period, season, species_code) %>%
   summarise(
-    mu  = mean(abund),
-    var = var(abund),
+    mu  = mean(total_abund),
+    var = var(total_abund),
     I_i = if_else(var > 0, mu^2 / var, NA_real_),
     .groups = "drop"
   )
+
+
 
 # ── Community invariability  I_C  ──────────────────────────────────────────
 comm_inv_ps <- monthly_sp %>% 
@@ -241,16 +245,7 @@ synchrony_fixed <- var_parts %>%
 # Portfolio: Temporal + Abundance-weighted mean(I_i)
 # ==========================================================
 
-pop_inv_ps_temporal <- monthly_sp %>%
-  group_by(major_area, period, season, date, species_code) %>%
-  summarise(abund_date = sum(abund), .groups = "drop") %>%
-  group_by(major_area, period, season, species_code) %>%
-  summarise(
-    mu  = mean(abund_date, na.rm = TRUE),
-    var = var(abund_date,  na.rm = TRUE),
-    I_i = if_else(var > 0, mu^2 / var, NA_real_),
-    .groups = "drop"
-  )
+pop_inv_ps_temporal <- pop_inv_ps 
 
 weights_temporal <- monthly_sp %>%
   group_by(major_area, period, season, date, species_code) %>%

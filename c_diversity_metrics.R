@@ -121,7 +121,7 @@ monthly_sp <- final_df_wide %>%
       month %in% c(12, 1, 2) ~ "Winter",   # DJF
       month %in% 3:5         ~ "Spring",   # MAM
       month %in% 6:8         ~ "Summer",   # JJA
-      month %in% 9:11       ~ "Fall"      # SON
+      month %in% 9:11       ~ "Fall"      # SON # Inconsistency with "b" but confirmed this does not affect the results
     ),
     season = factor(season, levels = c("Winter", "Spring", "Summer", "Fall"))
   ) %>% 
@@ -137,7 +137,7 @@ station_strat <- station %>%
       month %in% c(12, 1, 2) ~ "Winter",
       month %in% 3:5         ~ "Spring",
       month %in% 6:8         ~ "Summer",
-      month %in% 9:11        ~ "Fall"
+      month %in% 9:11        ~ "Fall" # Inconsistency with "b" but confirmed this does not affect the results
     ),
     season = factor(season, levels = c("Winter","Spring","Summer","Fall"))
   ) %>%
@@ -212,7 +212,7 @@ beta_div <- alpha_div %>%
   transmute(
     period, season,
     beta_richness = richness_gamma     / mean_alpha_rich,
-    beta_shannon  = hill_shannon_gamma / mean_alpha_hill  # uses ^1D
+    beta_shannon  = hill_shannon_gamma / mean_alpha_hill  # uses ^1D (exponential of shannon!)
   )
 
 ###############################################################################

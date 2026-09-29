@@ -357,3 +357,6 @@ ggsave(filename = file.path(results_dir, "Fig_S4_population_variability_600dpi.t
   dpi = 600, device = "tiff", compression = "lzw",
   bg = "white"
 )
+
+summary(m_pop)
+ranef(m_pop)$major_area

@@ -189,7 +189,7 @@ monthly_sp <- monthly_sp %>%
 # start_year <- 1992; end_year <- 2024; year_period_lut <- ...
 # monthly_sp columns used: major_area, period, season, year, month, sample_id, species_code, abund
 
-# ============ (Optional but recommended) keep only fully sampled strata ============
+# ============ keep only fully sampled strata ============
 # Count hauls in station by bay × period × season and keep n_samples == 180
 station_strat <- station %>%
   filter(year >= start_year, year <= end_year) %>%
@@ -272,7 +272,7 @@ beta_bray_pairs_monthly <- mps %>%
 #   1) average across the 3 months (Dec/Jan/Feb etc.) for each consecutive pair
 #   2) then average across the consecutive pairs inside the 3-year period
 beta_bray_stratum <- beta_bray_pairs_monthly %>%
-  group_by(major_area, period, season, year1, year2) %>%
+  group_by(major_area, period, season, year1, year2) %>%  
   summarise(
     bray_mean_across_months = mean(bray_consecutive, na.rm = TRUE),
     n_months_used = sum(is.finite(bray_consecutive)),
