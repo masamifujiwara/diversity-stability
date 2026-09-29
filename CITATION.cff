@@ -1,9 +1,8 @@
 cff-version: 1.2.0
-message: "If you use this software or data, please cite it as below."
+message: "If you use the software or data in this repository, please cite the specific software release."
 
 title: "Diversity-stability analysis code"
 type: software
-version: 1.1.0
 
 authors:
   - family-names: "Bleth"
@@ -38,8 +37,6 @@ keywords:
 license: "MIT"
 
 repository-code: "https://github.com/masamifujiwara/diversity-stability"
-
-date-released: 2026-09-29
 
 references:
   - type: article
