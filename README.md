@@ -77,7 +77,7 @@ All scripts are written for R ≥ 4.2 and use only publicly available packages f
 
 If you use these data or scripts, please cite:
 
-> Fujiwara, M. et al. *Evenness and Taylor’s law scaling shape biodiversity–stability relationships in subtropical estuarine communities.* *Ecology*. In preparation.
+> Fujiwara, M. et al. *Evenness and Taylor’s law scaling shape biodiversity–stability relationships in subtropical estuarine communities.* *Ecology*. under review.
 
 ## License
 
